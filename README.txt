@@ -87,7 +87,15 @@ Strength Reduction – Replaces * 2 with << 1 and / 2 with >> 1.
 Loop Unrolling (placeholder) – Currently does nothing, but sets the stage for future expansions.
 The end result is typically cleaner, more efficient, and easier-to-read Java code for our meme-generation system.
 
+Example Usage
 
+Below is a short snippet demonstrating how we typically use CodeOptimizer after generating Java code lines:
+
+lines_of_code = java_code.split("\n")
+optimizer = CodeOptimizer(lines_of_code)
+optimized_code = optimizer.optimize()
+final_code = "\n".join(optimized_code)
+At that point, final_code contains the optimized Java source, which can then be written to a .java file or used as needed.
 
 ---
 For part 3 we worked on the same laptop for some of the parts, and ran git reset and git push origin main --force so some of our commits from part 2 and on may be gone. 
