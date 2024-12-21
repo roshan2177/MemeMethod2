@@ -1,0 +1,14 @@
+Added test code and shell code 
+# Please enter the commit message for your changes. Lines starting
+# with '#' will be ignored, and an empty message aborts the commit.
+#
+# Committer: Roshan P <rosh@Roshans-MacBook-Pro.local>
+#
+# On branch main
+# Changes to be committed:
+#	modified:   meme_lexer.py
+#	modified:   scanner.sh
+#
+# Changes not staged for commit:
+#	modified:   Sample_meme_code.txt
+#

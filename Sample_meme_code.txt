@@ -1,0 +1,71 @@
+#Sample input 1
+
+create meme
+    background red
+    load pictures beach sun umbrella
+    size 800 x 600
+    border dotted
+        color
+    style montage
+    text "summer vibes"
+        placement top
+        overlay yes
+    count 10
+save images
+
+#Sample input 2
+
+create meme
+    background black
+    load pictures stars moon
+    size 1920 x 1080
+    border dashed
+        color
+    style panorama
+    text "night sky beauty"
+        placement center
+        overlay no
+    count 5
+save images
+
+#Sample input 3
+
+create meme
+    background white
+    load pictures car bike road
+    size 640 x 480
+    border none
+    style grid
+    text "on the go"
+        placement top-right
+        overlay yes
+    text "fast life"
+        placement bottom-right
+        overlay no
+    count 20
+save images
+
+#Sample input 4
+
+create meme
+    background green
+    load pictures tree river mountain
+    size 1024 x 768
+    border solid
+        color
+    style landscape
+    text "nature's beauty"
+        placement bottom
+        overlay yes
+    count 15
+save images
+
+#Sample input 5 (should result in error)
+
+create meme
+    background green
+    load pictures cat dog tree
+    size 1024 / 768
+    border dashed
+    style grid
+save images
