@@ -84,7 +84,7 @@ When you invoke the CodeOptimizer class (usually by creating an instance and cal
 Constant Folding – Simplifies numeric expressions at compile time (e.g., 2 + 3 → 5).
 Dead Code Elimination – Removes unused variable assignments.
 Strength Reduction – Replaces * 2 with << 1 and / 2 with >> 1.
-Loop Unrolling (placeholder) – Currently does nothing, but sets the stage for future expansions.
+Loop Unrolling  – sets the stage for future expansions.
 The end result is typically cleaner, more efficient, and easier-to-read Java code for our meme-generation system.
 
 Example Usage
