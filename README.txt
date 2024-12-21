@@ -13,20 +13,80 @@ I also brought the code optimization to a seperate file, if you want to specific
 
 
 
-
-
-
-
 What we ran for assignment 3:
 
 ./scanner.sh sample_meme_code.txt
 javac sample_part1.java(replace with whichever file you want to test)
 java sample_part1
 
+Programming Assignment 4 video: https://youtu.be/tuzW1efa_aI
 
 Programming Assignment 3 Video: https://youtu.be/OEw1hR7519E
 
 Programming Assignment 2 Video: https://youtu.be/5MtNUdKvdgQ
+
+
+
+PART 4:
+
+Code Optimizer
+
+Our project includes a CodeOptimizer class designed to perform basic compiler optimizations on lines of generated code. After generating Java code (for our meme-generation tool), we pass the resulting lines through the optimizer to clean up and simplify the final output. Below are the details of each optimization technique implemented.
+
+1. Constant Folding
+
+What It Does
+Constant folding identifies arithmetic expressions in the form of number operator number and evaluates them at “compile time” rather than at runtime. For instance, if the generated code contains int x = 2 + 3;, constant folding will replace it with int x = 5;.
+How It Works in Our Project
+We use a regular expression to detect occurrences of \b(\d+)\s*([+\-*/])\s*(\d+)\b in each line.
+Each match is evaluated via Python’s eval(), then substituted directly into the code.
+The process repeats on the same line if multiple constant expressions are found (e.g., 2 + 3 - 1 → 4 after folding 2 + 3 → 5, then 5 - 1 → 4).
+Why It Matters for Our Generated Java Code
+The code we generate might contain many numeric expressions for sizes, borders, or loops (if any). By folding these expressions upfront, we reduce unnecessary runtime calculations.
+This is especially useful in our meme-generation flow, where image dimensions or counts might be expressed as sums or products.
+2. Dead Code Elimination
+
+What It Does
+Dead code elimination (DCE) removes assignments to variables that are never used later in the code.
+How It Works in Our Project
+For each line, the optimizer checks if it contains varName = ....
+It then searches subsequent lines to see if varName ever appears again.
+If not, the line is considered “dead” and is removed from the final output.
+Why It Matters for Our Generated Java Code
+During code generation, it’s possible some parameters or variables are created but not utilized (e.g., an unreferenced border color or overlay variable). Removing these lines keeps the final Java file minimal and clean.
+It also helps reduce confusion and clutter when reviewing the generated code.
+3. Strength Reduction
+
+What It Does
+Strength reduction replaces “expensive” arithmetic operations with equivalent but cheaper operations. In our project, it specifically targets multiplication or division by 2.
+How It Works in Our Project
+After constant folding and dead code elimination, each line is scanned for:
+* 2 which is replaced with << 1
+/ 2 which is replaced with >> 1
+This transformation is a common micro-optimization where shifting bits is (in many architectures) faster than multiplication or division by 2.
+Why It Matters for Our Generated Java Code
+Although modern Java compilers/JVMs already perform many such optimizations, our approach demonstrates how you might manually optimize at the code level.
+If, for instance, you were generating code for an embedded system or a performance-critical loop, these transformations could yield noticeable benefits.
+4. Loop Unrolling (Placeholder)
+
+What It Does
+Loop unrolling typically expands a loop’s body to reduce overhead (e.g., turning a 4-iteration loop into four successive statements).
+How It Works in Our Project
+Currently, no loop detection or transformation is implemented. The function is a stub that simply returns the code unmodified.
+A future enhancement could detect small for loops in the generated Java code (e.g., a loop that runs from 0 to 3) and replace them with repeated code blocks.
+Why It Matters for Our Generated Java Code
+Repeatedly calling methods in a loop can add overhead. Unrolling small loops can sometimes improve performance, especially in tight, performance-critical sections of code (e.g., image processing steps).
+In a meme-generation scenario, unrolling small loops might reduce overhead, but it would also increase code size, so it’s a trade-off.
+Putting It All Together
+
+When you invoke the CodeOptimizer class (usually by creating an instance and calling optimize() on a list of code lines), it applies these techniques in the following order:
+
+Constant Folding – Simplifies numeric expressions at compile time (e.g., 2 + 3 → 5).
+Dead Code Elimination – Removes unused variable assignments.
+Strength Reduction – Replaces * 2 with << 1 and / 2 with >> 1.
+Loop Unrolling (placeholder) – Currently does nothing, but sets the stage for future expansions.
+The end result is typically cleaner, more efficient, and easier-to-read Java code for our meme-generation system.
+
 
 
 ---
@@ -226,3 +286,4 @@ public class GeneratedMemeProgram {
    - Verify the input file path when running the program.
 
 ---
+
